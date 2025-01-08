@@ -1,13 +1,17 @@
 function TabButton({
 	children,
+	isSelected,
 	onSelect,
 }: {
 	children: React.ReactNode;
+	isSelected: boolean;
 	onSelect: () => void;
 }) {
 	return (
 		<li>
-			<button onClick={onSelect}>{children}</button>
+			<button className={isSelected ? "active" : ""} onClick={onSelect}>
+				{children}
+			</button>
 		</li>
 	);
 }
