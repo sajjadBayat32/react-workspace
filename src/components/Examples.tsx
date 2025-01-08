@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { EXAMPLES } from "../data";
 import TabButton from "./TabButton";
+import Section from "./section";
 
 type MenuButtonType = keyof typeof EXAMPLES;
 
@@ -25,8 +26,7 @@ function Examples() {
 	}
 
 	return (
-		<section id="examples">
-			<h2>Examples</h2>
+		<Section title="Examples" id="examples">
 			<menu>
 				<TabButton
 					isSelected={selectedTopic === "components"}
@@ -54,7 +54,7 @@ function Examples() {
 				</TabButton>
 			</menu>
 			{tabContent}
-		</section>
+		</Section>
 	);
 }
 
