@@ -18,10 +18,10 @@ html {
 body {
 	background: radial-gradient(
 			circle at top,
-			rgba(241, 210, 70, 0.98),
-			rgba(250, 176, 103, 0.87)
+			rgb(129 70 241 / 98%),
+			rgb(242 103 250 / 87%)
 		),
-		url("bg-pattern-dark.png");
+		url(bg-pattern-dark.png);
 	background-repeat: repeat;
 	min-height: 100vh;
 	padding: 0;
