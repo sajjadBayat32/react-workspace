@@ -1,4 +1,4 @@
-import reactImg from "../../assets/react-core-concepts.png";
+import reactImg from "../../../assets/react-core-concepts.png";
 import "./Header.scss";
 
 const Titles = ["Fundamentals", "Core", "Better to know"];

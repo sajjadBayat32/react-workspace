@@ -1,16 +1,9 @@
-import Header from "./components/Header/Header";
-import CoreConcepts from "./components/CoreConcepts";
-import Examples from "./components/Examples";
-import "./App.css";
+import GetStarted from "./projects/GetStarted";
 
 function App() {
 	return (
 		<>
-			<Header />
-			<main>
-				<CoreConcepts />
-				<Examples />
-			</main>
+			<GetStarted />
 		</>
 	);
 }

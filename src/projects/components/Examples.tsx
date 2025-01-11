@@ -1,4 +1,4 @@
-import { EXAMPLES } from "../data";
+import { EXAMPLES } from "../data/data";
 import Section from "./section";
 import Tabs from "./Tabs";
 
