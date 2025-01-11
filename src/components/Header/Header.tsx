@@ -1,5 +1,5 @@
 import reactImg from "../../assets/react-core-concepts.png";
-import "./Header.css";
+import "./Header.scss";
 
 const Titles = ["Fundamentals", "Core", "Better to know"];
 function getRandomTitle() {
