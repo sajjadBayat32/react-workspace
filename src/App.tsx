@@ -1,11 +1,5 @@
-import GetStarted from "./projects/GetStarted";
-
 function App() {
-	return (
-		<>
-			<GetStarted />
-		</>
-	);
+	return <></>;
 }
 
 export default App;
