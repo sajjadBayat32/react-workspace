@@ -1,20 +1,26 @@
 import { useState } from "react";
 import GameBoard from "./components/GameBoard";
 import Header from "./components/layout/Header";
-import Player from "./components/Player";
+import Players from "./components/Player";
 import Log from "./components/Log";
 import { GameTurn } from "./types";
 import "./TicTacToe.scss";
 import { WINNING_COMBINATIONS } from "./static/winning-combinations";
 import GameOver from "./components/GameOver";
 
-const initialGameBoard: (string | null)[][] = [
+type Symbol = "X" | "O";
+type Players = { [s in Symbol]: string };
+
+const INITIAL_GAME_BOARD: (string | null)[][] = [
 	[null, null, null],
 	[null, null, null],
 	[null, null, null],
 ];
 
-type Symbol = "X" | "O";
+const PLAYERS: Players = {
+	X: "Sajjad",
+	O: "Zahra",
+};
 
 function deriveActivePlayer(gameTurns: GameTurn[]) {
 	let activePlayer = "X";
@@ -24,20 +30,20 @@ function deriveActivePlayer(gameTurns: GameTurn[]) {
 	return activePlayer;
 }
 
-export default function TicTacToe() {
-	const [players, setPlayers] = useState<{ [s in Symbol]: string }>({
-		X: "Sajjad",
-		O: "Zahra",
-	});
-	const [gameTurns, setGameTurns] = useState<GameTurn[]>([]);
-
-	const gameBoard = [...initialGameBoard.map((nestedArr) => [...nestedArr])];
+function deriveGameBoard(gameTurns: GameTurn[]) {
+	const gameBoard = [...INITIAL_GAME_BOARD.map((nestedArr) => [...nestedArr])];
 	for (const turn of gameTurns) {
 		const { player, square } = turn;
 		const { row, col } = square;
 		gameBoard[row][col] = player;
 	}
+	return gameBoard;
+}
 
+function deriveWinner(
+	gameBoard: (string | null)[][],
+	players: Players
+): string | null {
 	let winner = null;
 	for (const combination of WINNING_COMBINATIONS) {
 		const firstSquareSymbol = gameBoard[combination[0].row][combination[0].col];
@@ -53,7 +59,15 @@ export default function TicTacToe() {
 			break;
 		}
 	}
+	return winner;
+}
 
+export default function TicTacToe() {
+	const [players, setPlayers] = useState<Players>(PLAYERS);
+	const [gameTurns, setGameTurns] = useState<GameTurn[]>([]);
+
+	const gameBoard = deriveGameBoard(gameTurns);
+	const winner = deriveWinner(gameBoard, players);
 	const hasDraw = gameTurns.length === 9 && !winner;
 	const activePlayer = deriveActivePlayer(gameTurns);
 
@@ -86,7 +100,7 @@ export default function TicTacToe() {
 				<div id="game-container">
 					<ol id="players" className="highlight-player">
 						{Object.keys(players).map((symbol) => (
-							<Player
+							<Players
 								initialName={players[symbol as Symbol]}
 								symbol={symbol}
 								key={symbol}
