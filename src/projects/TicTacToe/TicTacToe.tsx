@@ -14,6 +14,8 @@ const initialGameBoard: (string | null)[][] = [
 	[null, null, null],
 ];
 
+type Symbol = "X" | "O";
+
 function deriveActivePlayer(gameTurns: GameTurn[]) {
 	let activePlayer = "X";
 	if (gameTurns.length > 0 && gameTurns[0].player === "X") {
@@ -23,6 +25,10 @@ function deriveActivePlayer(gameTurns: GameTurn[]) {
 }
 
 export default function TicTacToe() {
+	const [players, setPlayers] = useState<{ [s in Symbol]: string }>({
+		X: "Sajjad",
+		O: "Zahra",
+	});
 	const [gameTurns, setGameTurns] = useState<GameTurn[]>([]);
 
 	const gameBoard = [...initialGameBoard.map((nestedArr) => [...nestedArr])];
@@ -43,13 +49,12 @@ export default function TicTacToe() {
 			firstSquareSymbol === secondSquareSymbol &&
 			firstSquareSymbol === thirdSquareSymbol
 		) {
-			winner = firstSquareSymbol;
+			winner = players[firstSquareSymbol as Symbol];
 			break;
 		}
 	}
 
 	const hasDraw = gameTurns.length === 9 && !winner;
-
 	const activePlayer = deriveActivePlayer(gameTurns);
 
 	function handleSelectSquare(rowIndex: number, colIndex: number) {
@@ -67,22 +72,28 @@ export default function TicTacToe() {
 		setGameTurns([]);
 	}
 
+	function handlePlayerChangeName(symbol: string, player: string) {
+		setPlayers((prevPlayers) => ({
+			...prevPlayers,
+			[symbol]: player,
+		}));
+	}
+
 	return (
 		<>
 			<Header />
 			<main>
 				<div id="game-container">
 					<ol id="players" className="highlight-player">
-						<Player
-							initialName="Sajjad"
-							symbol="X"
-							isActive={activePlayer === "X"}
-						/>
-						<Player
-							initialName="Zahra"
-							symbol="O"
-							isActive={activePlayer === "O"}
-						/>
+						{Object.keys(players).map((symbol) => (
+							<Player
+								initialName={players[symbol as Symbol]}
+								symbol={symbol}
+								key={symbol}
+								isActive={activePlayer === symbol}
+								onChangeName={handlePlayerChangeName}
+							/>
+						))}
 					</ol>
 					{(winner || hasDraw) && (
 						<GameOver winner={winner} onRestart={handleRestart} />

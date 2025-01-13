@@ -4,12 +4,16 @@ export default function Player({
 	initialName,
 	symbol,
 	isActive,
+	onChangeName,
 }: ComponentProps) {
 	const [playerName, setPlayerName] = useState(initialName);
 	const [isEditing, setIsEditing] = useState<boolean>(false);
 
 	function handleEditClick() {
 		setIsEditing((editing) => !editing);
+		if (isEditing) {
+			onChangeName(symbol, playerName);
+		}
 	}
 
 	function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
@@ -43,4 +47,5 @@ interface ComponentProps {
 	initialName: string;
 	symbol: string;
 	isActive: boolean;
+	onChangeName: (symbol: string, player: string) => void;
 }
