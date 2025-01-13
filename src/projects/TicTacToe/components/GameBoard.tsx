@@ -1,23 +1,7 @@
-import { GameTurn } from "../types";
-
-const initialGameBoard: (string | null)[][] = [
-	[null, null, null],
-	[null, null, null],
-	[null, null, null],
-];
-
-export default function GameBoard({ onSelectSquare, turns }: ComponentProps) {
-	const gameBoard = initialGameBoard;
-
-	for (const turn of turns) {
-		const { player, square } = turn;
-		const { row, col } = square;
-		gameBoard[row][col] = player;
-	}
-
+export default function GameBoard({ onSelectSquare, board }: ComponentProps) {
 	return (
 		<ol id="game-board">
-			{gameBoard.map((row, rowIndex) => (
+			{board.map((row, rowIndex: number) => (
 				<li key={rowIndex}>
 					<ol>
 						{row.map((playerSymbol, colIndex) => (
@@ -26,7 +10,7 @@ export default function GameBoard({ onSelectSquare, turns }: ComponentProps) {
 									disabled={playerSymbol !== null}
 									onClick={() => onSelectSquare(rowIndex, colIndex)}
 								>
-									{playerSymbol}
+									{playerSymbol && <div>{playerSymbol}</div>}
 								</button>
 							</li>
 						))}
@@ -38,6 +22,6 @@ export default function GameBoard({ onSelectSquare, turns }: ComponentProps) {
 }
 
 interface ComponentProps {
-	turns: GameTurn[];
+	board: (string | null)[][];
 	onSelectSquare: (row: number, col: number) => void;
 }

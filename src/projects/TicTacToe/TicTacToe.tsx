@@ -5,6 +5,14 @@ import Player from "./components/Player";
 import Log from "./components/Log";
 import { GameTurn } from "./types";
 import "./TicTacToe.scss";
+import { WINNING_COMBINATIONS } from "./static/winning-combinations";
+import GameOver from "./components/GameOver";
+
+const initialGameBoard: (string | null)[][] = [
+	[null, null, null],
+	[null, null, null],
+	[null, null, null],
+];
 
 function deriveActivePlayer(gameTurns: GameTurn[]) {
 	let activePlayer = "X";
@@ -16,6 +24,32 @@ function deriveActivePlayer(gameTurns: GameTurn[]) {
 
 export default function TicTacToe() {
 	const [gameTurns, setGameTurns] = useState<GameTurn[]>([]);
+
+	const gameBoard = initialGameBoard;
+	for (const turn of gameTurns) {
+		const { player, square } = turn;
+		const { row, col } = square;
+		gameBoard[row][col] = player;
+	}
+
+	let winner = null;
+	for (const combination of WINNING_COMBINATIONS) {
+		const firstSquareSymbol = gameBoard[combination[0].row][combination[0].col];
+		const secondSquareSymbol =
+			gameBoard[combination[1].row][combination[1].col];
+		const thirdSquareSymbol = gameBoard[combination[2].row][combination[2].col];
+		if (
+			firstSquareSymbol &&
+			firstSquareSymbol === secondSquareSymbol &&
+			firstSquareSymbol === thirdSquareSymbol
+		) {
+			winner = firstSquareSymbol;
+			break;
+		}
+	}
+
+	const hasDraw = gameTurns.length === 9 && !winner;
+
 	const activePlayer = deriveActivePlayer(gameTurns);
 
 	function handleSelectSquare(rowIndex: number, colIndex: number) {
@@ -46,11 +80,12 @@ export default function TicTacToe() {
 							isActive={activePlayer === "O"}
 						/>
 					</ol>
+					{(winner || hasDraw) && <GameOver winner={winner} />}
 					<GameBoard
 						onSelectSquare={(row: number, col: number) =>
 							handleSelectSquare(row, col)
 						}
-						turns={gameTurns}
+						board={gameBoard}
 					/>
 				</div>
 				<Log turns={gameTurns} />
