@@ -1,10 +1,10 @@
-export default function GameOver({ winner }: ComponentProps) {
+export default function GameOver({ winner, onRestart }: ComponentProps) {
 	return (
 		<div id="game-over">
 			<h2>Game Over!</h2>
 			{winner ? <p>{winner} won!</p> : <p>It's a draw</p>}
 			<p>
-				<button>Rematch!</button>
+				<button onClick={onRestart}>Rematch!</button>
 			</p>
 		</div>
 	);
@@ -12,4 +12,5 @@ export default function GameOver({ winner }: ComponentProps) {
 
 interface ComponentProps {
 	winner: string | null;
+	onRestart: () => void;
 }

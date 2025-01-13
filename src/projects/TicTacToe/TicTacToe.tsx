@@ -25,7 +25,7 @@ function deriveActivePlayer(gameTurns: GameTurn[]) {
 export default function TicTacToe() {
 	const [gameTurns, setGameTurns] = useState<GameTurn[]>([]);
 
-	const gameBoard = initialGameBoard;
+	const gameBoard = [...initialGameBoard.map((nestedArr) => [...nestedArr])];
 	for (const turn of gameTurns) {
 		const { player, square } = turn;
 		const { row, col } = square;
@@ -63,6 +63,10 @@ export default function TicTacToe() {
 		});
 	}
 
+	function handleRestart() {
+		setGameTurns([]);
+	}
+
 	return (
 		<>
 			<Header />
@@ -80,7 +84,9 @@ export default function TicTacToe() {
 							isActive={activePlayer === "O"}
 						/>
 					</ol>
-					{(winner || hasDraw) && <GameOver winner={winner} />}
+					{(winner || hasDraw) && (
+						<GameOver winner={winner} onRestart={handleRestart} />
+					)}
 					<GameBoard
 						onSelectSquare={(row: number, col: number) =>
 							handleSelectSquare(row, col)
