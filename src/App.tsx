@@ -1,9 +1,9 @@
-import TicTacToe from "./projects/TicTacToe/TicTacToe";
+import TimeEstimate from "./projects/TimeEstimate/TimeEstimate";
 
 function App() {
 	return (
 		<>
-			<TicTacToe />
+			<TimeEstimate />
 		</>
 	);
 }
