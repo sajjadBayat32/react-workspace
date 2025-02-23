@@ -1,11 +1,11 @@
-import TimeEstimate from "./projects/TimeEstimate/TimeEstimate";
+import TaskManagement from "./projects/TaskManagement/TaskManagement";
 
 function App() {
-	return (
-		<>
-			<TimeEstimate />
-		</>
-	);
+  return (
+    <>
+      <TaskManagement />
+    </>
+  );
 }
 
 export default App;
