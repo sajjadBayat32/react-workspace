@@ -3,7 +3,7 @@ import ResultModal from "./ResultModal";
 
 function TimerChallenge({ title, targetTime }: ComponentProps) {
 	const timeout = useRef<number | null>(null);
-	const dialog = useRef<HTMLDialogElement>(null);
+	const dialog = useRef<{ open: () => void }>(null);
 	const [timerStarted, setTimerStarted] = useState(false);
 	const [timerExpired, setTimerExpired] = useState(false);
 
@@ -11,7 +11,7 @@ function TimerChallenge({ title, targetTime }: ComponentProps) {
 		setTimerStarted(true);
 		timeout.current = setTimeout(() => {
 			setTimerExpired(true);
-			dialog.current?.showModal();
+			dialog.current?.open();
 		}, targetTime * 1000);
 	}
 
@@ -23,7 +23,7 @@ function TimerChallenge({ title, targetTime }: ComponentProps) {
 
 	return (
 		<>
-			<ResultModal dialogRef={dialog} result="lost" targetTime={targetTime} />
+			<ResultModal ref={dialog} result="lost" targetTime={targetTime} />
 			<section className="challenge">
 				<h2>{title}</h2>
 				{timerExpired && <p>You Lost!</p>}
