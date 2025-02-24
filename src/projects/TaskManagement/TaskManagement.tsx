@@ -3,6 +3,7 @@ import { Project } from "./types/Project";
 import ProjectSidebar from "./components/ProjectSidebar";
 import NewProject from "./components/NewProject";
 import NoProjectSelected from "./components/NoProjectSelected";
+import SelectedProject from "./components/SelectedProject";
 
 function TaskManagement() {
 	const [projectsState, setProjectsState] = useState<State>({
@@ -29,20 +30,46 @@ function TaskManagement() {
 		}));
 	}
 
+	function handleCancelAddingProject() {
+		setProjectsState((prev) => ({
+			...prev,
+			selectedProjectId: undefined,
+		}));
+	}
+
+	function handleSelectProject(projectId: number) {
+		setProjectsState((prev) => ({
+			...prev,
+			selectedProjectId: projectId,
+		}));
+	}
+
 	let pageContent;
 	if (projectsState.selectedProjectId === undefined) {
 		pageContent = (
 			<NoProjectSelected onStartWithNewProject={handleStartWithNewProject} />
 		);
 	} else if (projectsState.selectedProjectId === null) {
-		pageContent = <NewProject onAddProject={handleAddProject} />;
+		pageContent = (
+			<NewProject
+				onCancelProject={handleCancelAddingProject}
+				onAddProject={handleAddProject}
+			/>
+		);
+	} else {
+		const selectedProject = projectsState.projects.find(
+			(p) => p.id === projectsState.selectedProjectId
+		) as Project;
+		pageContent = <SelectedProject project={selectedProject} />;
 	}
 
 	return (
 		<main className="h-screen py-8 flex gap-8">
 			<ProjectSidebar
 				projects={projectsState.projects}
+				selectedProjectId={projectsState.selectedProjectId}
 				onStartWithNewProject={handleStartWithNewProject}
+				onSelectProject={handleSelectProject}
 			/>
 			{pageContent}
 		</main>
