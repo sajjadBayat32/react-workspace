@@ -44,6 +44,13 @@ function TaskManagement() {
 		}));
 	}
 
+	function handleDeleteProject(projectId: number) {
+		setProjectsState((prev) => ({
+			selectedProjectId: undefined,
+			projects: prev.projects.filter((p) => p.id !== projectId),
+		}));
+	}
+
 	let pageContent;
 	if (projectsState.selectedProjectId === undefined) {
 		pageContent = (
@@ -60,7 +67,12 @@ function TaskManagement() {
 		const selectedProject = projectsState.projects.find(
 			(p) => p.id === projectsState.selectedProjectId
 		) as Project;
-		pageContent = <SelectedProject project={selectedProject} />;
+		pageContent = (
+			<SelectedProject
+				onDelete={handleDeleteProject}
+				project={selectedProject}
+			/>
+		);
 	}
 
 	return (

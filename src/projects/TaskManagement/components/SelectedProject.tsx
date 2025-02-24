@@ -1,6 +1,6 @@
 import { Project } from "../types/Project";
 
-function SelectedProject({ project }: ComponentsProps) {
+function SelectedProject({ project, onDelete }: ComponentsProps) {
 	const formattedDate = new Date(project.createdDate).toLocaleDateString(
 		"en-US",
 		{
@@ -17,7 +17,10 @@ function SelectedProject({ project }: ComponentsProps) {
 					<h1 className="text-3xl font-bold text-stone-600 mb-2">
 						{project.title}
 					</h1>
-					<button className="text-stone-600 hover:text-stone-950">
+					<button
+						onClick={() => onDelete(project.id)}
+						className="text-stone-600 hover:text-stone-950 cursor-pointer"
+					>
 						Delete
 					</button>
 				</div>
@@ -33,6 +36,7 @@ function SelectedProject({ project }: ComponentsProps) {
 
 interface ComponentsProps {
 	project: Project;
+	onDelete: (id: number) => void;
 }
 
 export default SelectedProject;
