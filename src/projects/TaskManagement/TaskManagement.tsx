@@ -75,7 +75,19 @@ function TaskManagement() {
 		});
 	}
 
-	function handleDeleteTask(projectId: number, id: number) {}
+	function handleDeleteTask(id: number) {
+		setProjectsState((prev) => {
+			return {
+				...prev,
+				projects: [
+					...prev.projects.map((p) => ({
+						...p,
+						tasks: p.tasks.filter((t) => t.id !== id),
+					})),
+				],
+			};
+		});
+	}
 
 	let pageContent;
 	if (projectsState.selectedProjectId === undefined) {

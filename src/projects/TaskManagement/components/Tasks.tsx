@@ -22,7 +22,7 @@ function Tasks({ projectId, tasks, onAddTask, onDeleteTask }: ComponentProps) {
 							<span>{task.title}</span>
 							<button
 								className="text-stone-700 hover:text-red-500 cursor-pointer"
-								onClick={() => onDeleteTask(projectId, task.id)}
+								onClick={() => onDeleteTask(task.id)}
 							>
 								Clear
 							</button>
@@ -38,7 +38,7 @@ interface ComponentProps {
 	projectId: number;
 	tasks: Task[];
 	onAddTask: (projectId: number, task: string) => void;
-	onDeleteTask: (projectId: number, id: number) => void;
+	onDeleteTask: (id: number) => void;
 }
 
 export default Tasks;

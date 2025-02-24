@@ -49,7 +49,7 @@ interface ComponentsProps {
 	project: Project;
 	onDelete: (id: number) => void;
 	onAddTask: (projectId: number, task: string) => void;
-	onDeleteTask: (projectId: number, id: number) => void;
+	onDeleteTask: (id: number) => void;
 }
 
 export default SelectedProject;
