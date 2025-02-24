@@ -1,11 +1,11 @@
-import TaskManagement from "./projects/TaskManagement/TaskManagement";
+import ElegantShop from "./projects/ElegantShop/ElegantShop";
 
 function App() {
-  return (
-    <>
-      <TaskManagement />
-    </>
-  );
+	return (
+		<>
+			<ElegantShop />
+		</>
+	);
 }
 
 export default App;
