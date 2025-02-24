@@ -1,6 +1,12 @@
 import { Project } from "../types/Project";
+import Tasks from "./Tasks";
 
-function SelectedProject({ project, onDelete }: ComponentsProps) {
+function SelectedProject({
+	project,
+	onDelete,
+	onAddTask,
+	onDeleteTask,
+}: ComponentsProps) {
 	const formattedDate = new Date(project.createdDate).toLocaleDateString(
 		"en-US",
 		{
@@ -29,7 +35,12 @@ function SelectedProject({ project, onDelete }: ComponentsProps) {
 					{project.description}
 				</p>
 			</header>
-			Tasks
+			<Tasks
+				projectId={project.id}
+				tasks={project.tasks}
+				onAddTask={onAddTask}
+				onDeleteTask={onDeleteTask}
+			/>
 		</div>
 	);
 }
@@ -37,6 +48,8 @@ function SelectedProject({ project, onDelete }: ComponentsProps) {
 interface ComponentsProps {
 	project: Project;
 	onDelete: (id: number) => void;
+	onAddTask: (projectId: number, task: string) => void;
+	onDeleteTask: (projectId: number, id: number) => void;
 }
 
 export default SelectedProject;

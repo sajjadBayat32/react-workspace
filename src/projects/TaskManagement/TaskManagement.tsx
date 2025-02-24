@@ -4,6 +4,7 @@ import ProjectSidebar from "./components/ProjectSidebar";
 import NewProject from "./components/NewProject";
 import NoProjectSelected from "./components/NoProjectSelected";
 import SelectedProject from "./components/SelectedProject";
+import { Task } from "./types/Task";
 
 function TaskManagement() {
 	const [projectsState, setProjectsState] = useState<State>({
@@ -51,6 +52,31 @@ function TaskManagement() {
 		}));
 	}
 
+	function handleAddTask(projectId: number, task: string) {
+		const newTask: Task = {
+			id: Math.ceil(Math.random() * 1000),
+			title: task,
+		};
+		setProjectsState((prev) => {
+			const UpdatedProjects = prev.projects.map((p) => {
+				const newTasks = [];
+				if (p.id === projectId) {
+					newTasks.push(newTask);
+				}
+				return {
+					...p,
+					tasks: [...newTasks, ...p.tasks],
+				};
+			});
+			return {
+				...prev,
+				projects: UpdatedProjects,
+			};
+		});
+	}
+
+	function handleDeleteTask(projectId: number, id: number) {}
+
 	let pageContent;
 	if (projectsState.selectedProjectId === undefined) {
 		pageContent = (
@@ -71,6 +97,8 @@ function TaskManagement() {
 			<SelectedProject
 				onDelete={handleDeleteProject}
 				project={selectedProject}
+				onAddTask={handleAddTask}
+				onDeleteTask={handleDeleteTask}
 			/>
 		);
 	}
