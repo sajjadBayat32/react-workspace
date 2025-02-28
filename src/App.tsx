@@ -1,11 +1,11 @@
-import ElegantShop from "./projects/ElegantShop/ElegantShop";
+import PlacePicker from "./projects/PlacePicker/PlacePicker";
 
 function App() {
-	return (
-		<>
-			<ElegantShop />
-		</>
-	);
+  return (
+    <>
+      <PlacePicker />
+    </>
+  );
 }
 
 export default App;
